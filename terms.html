@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Step 2: Terms & Conditions</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; display: flex; justify-content: center; padding: 20px; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
+        .scroll-box { height: 400px; overflow-y: scroll; border: 2px solid #ddd; padding: 20px; background: #fafafa; margin-bottom: 20px; border-radius: 5px; line-height: 1.8; }
+        button { width: 100%; padding: 15px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:disabled { background: #cccccc; cursor: not-allowed; }
+        button:not(:disabled) { background: #28a745; color: white; }
+        button:not(:disabled):hover { background: #218838; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Tutor Agreement & Guidelines</h2>
+    <p>Please read all terms carefully. You must scroll to the bottom to proceed.</p>
+
+    <div id="terms-box" class="scroll-box">
+        <h3>1. Professional Standard of Conduct</h3>
+        <p>As a verified tutor on this platform, you agree to maintain the highest standard of professional behavior. You must communicate clearly and respectfully with all students. Any use of inappropriate language, harassment, or unprofessional conduct will result in immediate termination of your account.</p>
+        <br><br><br><br><br>
+        
+        <h3>2. Academic Integrity</h3>
+        <p>Tutors must never complete assignments, take exams, or perform work on behalf of a student. Your role is to guide, explain, and assist the student in understanding the material. Facilitating cheating or plagiarism is strictly prohibited.</p>
+        <br><br><br><br><br>
+        
+        <h3>3. Scheduling and Punctuality</h3>
+        <p>You agree to honor all scheduled sessions. If a cancellation is necessary, you must provide the student with at least 24 hours' notice. Frequent cancellations or no-shows will negatively impact your ranking and may lead to suspension.</p>
+        <br><br><br><br><br>
+        
+        <h3>4. Background Verification Fee</h3>
+        <p>To maintain a safe environment, all tutors must undergo a background and identity check. This process requires a one-time, non-refundable verification fee of KES 100, payable via M-Pesa at the end of this registration process.</p>
+        <br><br><br><br><br>
+        
+        <h3>5. Final Acknowledgment</h3>
+        <p>By proceeding, you acknowledge that you have read and agreed to all the stipulations outlined in this legal agreement. You understand your responsibilities and agree to the payment of the verification fee.</p>
+    </div>
+
+    <div>
+        <label style="font-size: 16px;">
+            <input type="checkbox" id="agree-check" disabled> 
+            I have scrolled to the bottom, read, and agree to the terms.
+        </label>
+        <br><br>
+        <button id="next-btn" onclick="goToQuiz()" disabled>Proceed to Competency Test</button>
+    </div>
+</div>
+
+<script>
+    // Security check: Make sure they registered first
+    if (!localStorage.getItem('tutorEmail')) {
+        window.location.href = "index.html";
+    }
+
+    const termsBox = document.getElementById('terms-box');
+    const agreeCheck = document.getElementById('agree-check');
+    const nextBtn = document.getElementById('next-btn');
+
+    // Scroll Logic
+    termsBox.addEventListener('scroll', function() {
+        if (termsBox.scrollHeight - termsBox.scrollTop <= termsBox.clientHeight + 2) {
+            agreeCheck.disabled = false;
+        }
+    });
+
+    agreeCheck.addEventListener('change', function() {
+        nextBtn.disabled = !agreeCheck.checked;
+    });
+
+    function goToQuiz() {
+        window.location.href = "quiz.html";
+    }
+</script>
+
+</body>
+</html>

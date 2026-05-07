@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 3: Language Competency Test</title>
+    <style>
+        :root {
+            --primary-teal: #17a2b8;
+            --dark-teal: #138496;
+            --bg-gray: #f4f7f6;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-gray); padding: 20px; display: flex; justify-content: center; }
+        .container { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); width: 100%; max-width: 650px; }
+        
+        h2 { color: #333; text-align: center; margin-top: 0; }
+        .instr { color: #666; text-align: center; margin-bottom: 30px; font-size: 15px; }
+
+        .lang-selector { 
+            background: #e9ecef; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin-bottom: 30px; 
+            text-align: center;
+        }
+
+        select { padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; width: 250px; }
+
+        .question { margin-bottom: 25px; padding: 15px; border-left: 5px solid var(--primary-teal); background: #fafafa; display: none; }
+        h3 { font-size: 16px; margin: 0 0 12px 0; color: #2c3e50; }
+        
+        label { display: block; margin-bottom: 10px; font-size: 15px; cursor: pointer; padding: 8px; border-radius: 4px; transition: background 0.2s; }
+        label:hover { background: #ececec; }
+        input[type="radio"] { margin-right: 10px; }
+
+        button { width: 100%; padding: 16px; background: var(--primary-teal); color: white; border: none; border-radius: 6px; font-size: 17px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { background: var(--dark-teal); }
+        
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Competency Assessment</h2>
+    <p class="instr">Please select your translation language. You must score 5/5 to be verified.</p>
+
+    <!-- Language Picker -->
+    <div class="lang-selector">
+        <label for="langChoice" style="display:inline; font-weight:bold;">I want to translate to:</label><br><br>
+        <select id="langChoice" onchange="loadQuiz()">
+            <option value="">-- Choose Language --</option>
+            <option value="kiswahili">Kiswahili</option>
+            <option value="french">French (Français)</option>
+            <option value="chinese">Chinese (中文)</option>
+            <option value="japanese">Japanese (日本語)</option>
+        </select>
+    </div>
+
+    <form id="quizForm" class="hidden">
+        <div id="quizArea">
+            <!-- Questions injected here by JS -->
+        </div>
+        <button type="button" id="submitBtn" onclick="submitQuiz()">Validate & Proceed</button>
+    </form>
+</div>
+
+<script>
+    if (!localStorage.getItem('tutorEmail')) window.location.href = "index.html";
+
+    const quizData = {
+        kiswahili: {
+            questions: [
+                { q: "How do you translate: 'I am looking forward to meeting you'?", options: ["Natazamia kukutana nawe", "Mimi kuona wewe mbele", "Nimekutana nawe tangu mbele"], correct: 0 },
+                { q: "Translate: 'The project is under review.'", options: ["Mradi uko chini ya mapitio", "Mradi umepitiwa tayari", "Mradi unafanya review"], correct: 0 },
+                { q: "Translate: 'Keep up the good work.'", options: ["Weka kazi nzuri juu", "Endelea na kazi nzuri", "Kazi yako ni nzuri sana"], correct: 1 },
+                { q: "What is the best translation for 'Sustainable Development'?", options: ["Maendeleo ya kudumu", "Maendeleo endelevu", "Kukua kwa maendeleo"], correct: 1 },
+                { q: "Translate: 'Are you available for a session?'", options: ["Uko tayari kwa kipindi?", "Wewe ni session leo?", "Je, uko na muda wa kutosha?"], correct: 0 }
+            ]
+        },
+        french: {
+            questions: [
+                { q: "How do you translate: 'It's a pleasure to meet you'?", options: ["C'est un plaisir de vous voir", "Enchanté de faire votre connaissance", "Je t'aime beaucoup"], correct: 1 },
+                { q: "Translate: 'I need to check the schedule.'", options: ["Je dois vérifier l'horaire", "Je regarde la montre", "L'emploi du temps est fini"], correct: 0 },
+                { q: "What is the translation for 'User Interface'?", options: ["Surface d'usager", "Interface Utilisateur", "Inter-Face de logicel"], correct: 1 },
+                { q: "Translate: 'Please sign this document.'", options: ["S'il vous plaît écrivez ici", "Veuillez signer ce document", "Donnez-moi le papier"], correct: 1 },
+                { q: "How do you say 'Thank you in advance'?", options: ["Merci avant", "Merci à l'avance", "Merci par avance"], correct: 2 }
+            ]
+        },
+        chinese: {
+            questions: [
+                { q: "Translate: 'Hello, how can I help you?'", options: ["你好，我能帮你吗？", "你想去哪儿？", "你叫什么名字？"], correct: 0 },
+                { q: "What is 'Artificial Intelligence' in Chinese?", options: ["电脑人", "人工智能", "机器智能"], correct: 1 },
+                { q: "How do you say 'Good Luck'?", options: ["加油", "祝你好运", "恭喜发财"], correct: 1 },
+                { q: "Translate: 'See you tomorrow.'", options: ["明天见", "再见", "昨天见"], correct: 0 },
+                { q: "How do you say 'I understand'?", options: ["我不懂", "我明白", "你说什么"], correct: 1 }
+            ]
+        },
+        japanese: {
+            questions: [
+                { q: "Translate: 'Nice to meet you' (Standard).", options: ["おやすみなさい", "はじめまして", "さようなら"], correct: 1 },
+                { q: "How do you say 'I am a teacher'?", options: ["私は学生です", "私は先生です", "私は日本人です"], correct: 1 },
+                { q: "Translate: 'Excuse me' or 'I'm sorry'.", options: ["すみません", "ありがとう", "こんにちは"], correct: 0 },
+                { q: "What is 'Japan' in Japanese?", options: ["ちゅうごく", "にほん", "アメリカ"], correct: 1 },
+                { q: "Translate: 'I don't understand.'", options: ["わかりません", "わかります", "しりません"], correct: 0 }
+            ]
+        }
+    };
+
+    let currentLanguage = "";
+
+    function loadQuiz() {
+        const choice = document.getElementById('langChoice').value;
+        const quizArea = document.getElementById('quizArea');
+        const quizForm = document.getElementById('quizForm');
+        
+        if (!choice) {
+            quizForm.classList.add('hidden');
+            return;
+        }
+
+        currentLanguage = choice;
+        quizArea.innerHTML = ""; // Clear old
+        quizForm.classList.remove('hidden');
+
+        quizData[choice].questions.forEach((item, index) => {
+            let html = `
+                <div class="question" style="display:block;">
+                    <h3>${index + 1}. ${item.q}</h3>
+                    ${item.options.map((opt, i) => `
+                        <label><input type="radio" name="q${index}" value="${i}"> ${opt}</label>
+                    `).join('')}
+                </div>
+            `;
+            quizArea.innerHTML += html;
+        });
+    }
+
+    function submitQuiz() {
+        const questions = quizData[currentLanguage].questions;
+        let score = 0;
+        let complete = true;
+
+        questions.forEach((item, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            if (!selected) {
+                complete = false;
+            } else if (parseInt(selected.value) === item.correct) {
+                score++;
+            }
+        });
+
+        if (!complete) {
+            alert("Please answer all questions.");
+            return;
+        }
+
+        if (score === 5) {
+            alert(`Excellent! 5/5 in ${currentLanguage.toUpperCase()}. Proceeding to Payment.`);
+            localStorage.setItem('tutorLanguage', currentLanguage);
+            window.location.href = "payment.html";
+        } else {
+            alert(`Score: ${score}/5. You must get a perfect score to qualify as a ${currentLanguage} translator. Try again!`);
+        }
+    }
+</script>
+
+</body>
+</html>

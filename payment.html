@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Portal | Step 4: Secure Payment</title>
+    <style>
+        :root {
+            --success-green: #28a745;
+            --pesapal-orange: #ff5722;
+            --pesapal-hover: #e64a19;
+            --bg-gray: #f4f7f6;
+            --text-main: #333;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: var(--bg-gray); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+
+        .container { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            width: 100%; 
+            max-width: 420px; 
+            text-align: center; 
+        }
+
+        h2 { color: var(--text-main); margin-bottom: 20px; }
+
+        .receipt { 
+            background: #fdfdfd; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin-bottom: 25px; 
+            text-align: left; 
+            border: 1px dashed #bbb; 
+        }
+
+        .receipt p { margin: 8px 0; color: #555; font-size: 14px; }
+        .receipt strong { color: #222; }
+
+        .amount-box { 
+            font-size: 28px; 
+            font-weight: 800; 
+            color: var(--success-green); 
+            text-align: center; 
+            margin: 15px 0;
+            padding: 10px;
+            background: #f0fff4;
+            border-radius: 6px;
+        }
+
+        .input-group { text-align: left; margin-bottom: 20px; }
+        label { font-size: 13px; font-weight: 600; color: #666; margin-bottom: 5px; display: block; }
+
+        input { 
+            width: 100%; 
+            padding: 14px; 
+            border: 1px solid #ccc; 
+            border-radius: 6px; 
+            box-sizing: border-box; 
+            font-size: 16px;
+            background: #fafafa;
+        }
+
+        input:focus { outline: none; border-color: var(--pesapal-orange); background: #fff; }
+
+        .hint { font-size: 11px; color: #888; margin-top: 5px; line-height: 1.4; }
+
+        button { 
+            width: 100%; 
+            padding: 16px; 
+            background: var(--pesapal-orange); 
+            color: white; 
+            border: none; 
+            border-radius: 6px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+        }
+
+        button:hover { background: var(--pesapal-hover); transform: translateY(-1px); }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+
+        .secure-badge {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Final Verification</h2>
+    
+    <div class="receipt">
+        <p><strong>Merchant:</strong> Tutor Verification Portal</p>
+        <p><strong>Candidate:</strong> <span id="displayName">Loading...</span></p>
+        <p><strong>Country:</strong> <span id="displayCountry">Loading...</span></p>
+        <div class="amount-box" id="displayAmount">KES 100.00</div>
+        <p style="text-align: center; font-size: 11px;">Verification & Background Check Fee</p>
+    </div>
+
+    <div class="input-group">
+        <label id="phoneLabel">Mobile Money Number</label>
+        <input type="text" id="phone" placeholder="e.g. 254712345678" required>
+        <p class="hint" id="phoneHint">Ensure you include your country code (e.g., 254 for Kenya, 256 for Uganda).</p>
+    </div>
+    
+    <button id="payBtn" onclick="processPayment()">Initialize Secure Payment</button>
+
+    <div class="secure-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        Secured by PesaPal 3.0 Encryption
+    </div>
+</div>
+
+<script>
+    // 1. Fetch Session Data
+    const email = localStorage.getItem('tutorEmail');
+    const fname = localStorage.getItem('tutorFname');
+    const lname = localStorage.getItem('tutorLname');
+    const country = localStorage.getItem('tutorCountry') || 'Kenya';
+
+    // 2. Regional Settings Configuration
+    const regionalSettings = {
+        'Kenya': { currency: 'KES', amount: '100.00', hint: 'Enter Safaricom/Airtel/Telkom (e.g., 254...)' },
+        'Uganda': { currency: 'UGX', amount: '3,000.00', hint: 'Enter MTN/Airtel Number (e.g., 256...)' },
+        'Tanzania': { currency: 'TZS', amount: '2,000.00', hint: 'Enter Vodacom/Tigo/Airtel (e.g., 255...)' },
+        'Rwanda': { currency: 'RWF', amount: '1,000.00', hint: 'Enter MTN/Airtel Number (e.g., 250...)' }
+    };
+
+    // 3. Initialize Page Content
+    if (!email) {
+        window.location.href = "index.html"; 
+    } else {
+        const settings = regionalSettings[country] || regionalSettings['Kenya'];
+        document.getElementById('displayName').innerText = `${fname} ${lname}`;
+        document.getElementById('displayCountry').innerText = country;
+        document.getElementById('displayAmount').innerText = `${settings.currency} ${settings.amount}`;
+        document.getElementById('phoneHint').innerText = settings.hint;
+    }
+
+    // 4. Payment Execution
+    async function processPayment() {
+        const phone = document.getElementById('phone').value.trim();
+        const btn = document.getElementById('payBtn');
+
+        if (!phone || phone.length < 10) {
+            alert("Please enter a valid mobile money phone number with country code.");
+            return;
+        }
+
+        btn.innerText = "Requesting Secure Link...";
+        btn.disabled = true;
+
+        const paymentData = {
+            fname: fname,
+            lname: lname,
+            email: email,
+            phone: phone,
+            country: country
+        };
+
+        try {
+            // This hits your Python app.py
+            const response = await fetch('http://127.0.0.1:5000/initiate-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(paymentData)
+            });
+
+            if (!response.ok) throw new Error('Backend server is unreachable');
+
+            const result = await response.json();
+            
+            if (result.redirect_url) {
+                // Redirect user to the PesaPal Payment Page (STK Push trigger)
+                window.location.href = result.redirect_url;
+            } else {
+                throw new Error(result.error || "Payment Gateway Error");
+            }
+        } catch (error) {
+            console.error("Payment Error:", error);
+            alert("Connection Failed: Ensure your Python 'app.py' is running and you have an active internet connection.");
+            btn.innerText = "Try Again";
+            btn.disabled = false;
+        }
+    }
+</script>
+
+</body>
+</html>

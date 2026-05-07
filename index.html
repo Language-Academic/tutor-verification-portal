@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Portal | Step 1: Registration</title>
+    <style>
+        :root {
+            --primary-blue: #1a73e8;
+            --hover-blue: #1557b0;
+            --bg-gray: #f0f2f5;
+            --text-dark: #202124;
+            --error-red: #d93025;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background: var(--bg-gray); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+
+        .container { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1); 
+            width: 100%; 
+            max-width: 420px; 
+            box-sizing: border-box;
+        }
+
+        h2 { 
+            text-align: center; 
+            color: var(--primary-blue); 
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+
+        .subtitle { 
+            text-align: center; 
+            color: #5f6368; 
+            font-size: 14px; 
+            margin-bottom: 30px; 
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .form-group { margin-bottom: 15px; }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #3c4043;
+        }
+
+        input, select { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1px solid #dadce0; 
+            border-radius: 6px; 
+            box-sizing: border-box; 
+            font-size: 15px;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(26,115,232,0.1);
+        }
+
+        button { 
+            width: 100%; 
+            padding: 14px; 
+            background: var(--primary-blue); 
+            color: white; 
+            border: none; 
+            border-radius: 6px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            margin-top: 10px; 
+            transition: background 0.2s, transform 0.1s; 
+        }
+
+        button:hover { background: var(--hover-blue); }
+        button:active { transform: scale(0.98); }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+
+        .error { 
+            color: var(--error-red); 
+            font-size: 13px; 
+            text-align: center; 
+            display: none; 
+            margin-top: 15px;
+            padding: 10px;
+            background: #fce8e6;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Tutor Registration</h2>
+    <p class="subtitle">East Africa Verification Portal</p>
+    
+    <div class="form-group">
+        <label>Full Name</label>
+        <div style="display: flex; gap: 10px;">
+            <input type="text" id="fname" placeholder="First Name" required>
+            <input type="text" id="lname" placeholder="Last Name" required>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="email" placeholder="example@domain.com" required>
+    </div>
+    
+    <div class="form-group">
+        <label>Identification</label>
+        <input type="text" id="nationalId" placeholder="National ID / Passport Number" required>
+    </div>
+    
+    <div class="form-group">
+        <label>Region</label>
+        <select id="country">
+            <option value="Kenya">Kenya 🇰🇪</option>
+            <option value="Uganda">Uganda 🇺🇬</option>
+            <option value="Tanzania">Tanzania 🇹🇿</option>
+            <option value="Rwanda">Rwanda 🇷🇼</option>
+        </select>
+    </div>
+    
+    <div id="error-msg" class="error"></div>
+    <button id="submitBtn">Save & Continue</button>
+</div>
+
+<script type="module">
+  // Clear previous session data on load
+  localStorage.clear();
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+  // Your Verified Firebase Configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAH_qDLxK6pgrpSujRnUJj8hp19eOJsdH0",
+    authDomain: "tutor-verification-system.firebaseapp.com",
+    databaseURL: "https://tutor-verification-system-default-rtdb.firebaseio.com",
+    projectId: "tutor-verification-system",
+    storageBucket: "tutor-verification-system.firebasestorage.app",
+    messagingSenderId: "802962182737",
+    appId: "1:802962182737:web:c0d09706320ee5eea39e70",
+    measurementId: "G-CMYYG6MQC1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  document.getElementById('submitBtn').onclick = async () => {
+      const btn = document.getElementById('submitBtn');
+      const errorDiv = document.getElementById('error-msg');
+      
+      const fname = document.getElementById('fname').value.trim();
+      const lname = document.getElementById('lname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const idNum = document.getElementById('nationalId').value.trim();
+      const country = document.getElementById('country').value;
+
+      // Basic Validation
+      if (!fname || !lname || !email || !idNum) {
+          errorDiv.innerText = "Please complete all fields before continuing.";
+          errorDiv.style.display = "block";
+          return;
+      }
+
+      // UI Feedback
+      btn.innerText = "Registering...";
+      btn.disabled = true;
+      errorDiv.style.display = "none";
+
+      try {
+          // Store in Firestore
+          await setDoc(doc(db, "tutors", email), {
+              firstName: fname,
+              lastName: lname,
+              email: email,
+              idNumber: idNum,
+              country: country,
+              registrationStatus: "pending_verification",
+              createdAt: new Date().toISOString()
+          });
+          
+          // Secure data to LocalStorage for subsequent flow
+          localStorage.setItem('tutorEmail', email);
+          localStorage.setItem('tutorFname', fname);
+          localStorage.setItem('tutorLname', lname);
+          localStorage.setItem('tutorCountry', country);
+          
+          // Redirect to Terms & Conditions
+          window.location.href = "terms.html";
+          
+      } catch (e) {
+          console.error("Database Error:", e);
+          errorDiv.innerText = "System error: " + e.message;
+          errorDiv.style.display = "block";
+          btn.innerText = "Save & Continue";
+          btn.disabled = false;
+      }
+  };
+</script>
+</body>
+</html>
