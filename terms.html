@@ -2,56 +2,139 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Step 2: Terms & Conditions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Portal | Step 2: Service Agreement</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f4f7f6; display: flex; justify-content: center; padding: 20px; }
-        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
-        .scroll-box { height: 400px; overflow-y: scroll; border: 2px solid #ddd; padding: 20px; background: #fafafa; margin-bottom: 20px; border-radius: 5px; line-height: 1.8; }
-        button { width: 100%; padding: 15px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button:disabled { background: #cccccc; cursor: not-allowed; }
-        button:not(:disabled) { background: #28a745; color: white; }
-        button:not(:disabled):hover { background: #218838; }
+        :root {
+            --primary-blue: #1a73e8;
+            --text-gray: #3c4043;
+            --border-color: #dadce0;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: #f8f9fa; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            padding: 40px 20px;
+        }
+
+        .container { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 8px; 
+            box-shadow: 0 1px 3px rgba(60,64,67,0.3); 
+            width: 100%; 
+            max-width: 800px; 
+        }
+
+        header {
+            border-bottom: 2px solid var(--primary-blue);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+
+        h2 { color: var(--primary-blue); margin: 0; font-size: 24px; }
+        .version { font-size: 12px; color: #70757a; margin-top: 5px; }
+
+        .scroll-box { 
+            height: 500px; 
+            overflow-y: scroll; 
+            border: 1px solid var(--border-color); 
+            padding: 30px; 
+            background: #ffffff; 
+            margin-bottom: 25px; 
+            border-radius: 4px; 
+            line-height: 1.6;
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* Styling for the legal text */
+        h3 { color: #202124; font-size: 18px; margin-top: 25px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        strong { color: #000; }
+        .clause-num { font-weight: bold; margin-right: 10px; color: var(--primary-blue); }
+
+        .action-area {
+            background: #f1f3f4;
+            padding: 20px;
+            border-radius: 6px;
+        }
+
+        label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-weight: 500; }
+        input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; }
+
+        button { 
+            width: 100%; 
+            padding: 16px; 
+            border: none; 
+            border-radius: 4px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.2s; 
+            margin-top: 20px;
+        }
+
+        button:disabled { background: #dadce0; color: #70757a; cursor: not-allowed; }
+        button:not(:disabled) { background: var(--primary-blue); color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        button:not(:disabled):hover { background: #1557b0; }
+
+        /* Custom Scrollbar for a "Pro" look */
+        .scroll-box::-webkit-scrollbar { width: 8px; }
+        .scroll-box::-webkit-scrollbar-track { background: #f1f1f1; }
+        .scroll-box::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Tutor Agreement & Guidelines</h2>
-    <p>Please read all terms carefully. You must scroll to the bottom to proceed.</p>
+    <header>
+        <h2>Independent Tutor Service Agreement</h2>
+        <div class="version">Last Updated: May 2026 | East Africa Region</div>
+    </header>
 
     <div id="terms-box" class="scroll-box">
-        <h3>1. Professional Standard of Conduct</h3>
-        <p>As a verified tutor on this platform, you agree to maintain the highest standard of professional behavior. You must communicate clearly and respectfully with all students. Any use of inappropriate language, harassment, or unprofessional conduct will result in immediate termination of your account.</p>
-        <br><br><br><br><br>
+        <p>This agreement is a legally binding contract between you (the "Tutor") and the Portal Platform. By scrolling and accepting, you agree to the following terms:</p>
+
+        <h3><span class="clause-num">1.0</span>Scope of Services</h3>
+        <p>The Platform provides a bridge between language experts and students. You represent that you are proficient in the languages you claim to teach. Furthermore, the Platform may provide curated access to third-party legitimate job sites; however, the Platform does not guarantee employment from these external entities.</p>
+
+        <h3><span class="clause-num">2.0</span>Professional Integrity & Language Standards</h3>
+        <p><strong>2.1 Accuracy:</strong> You agree to provide accurate linguistic instruction. Misleading students regarding your fluency levels is grounds for immediate termination.</p>
+        <p><strong>2.2 Academic Honesty:</strong> Tutors shall not complete academic assignments or exams for students. This service is for <em>instruction</em> and <em>mentorship</em> only.</p>
+
+        <h3><span class="clause-num">3.0</span>Financial Terms & Verification</h3>
+        <p><strong>3.1 Identity Verification:</strong> To protect our community, all tutors must undergo identity screening. A one-time processing fee of <strong>some amount</strong> is required to verify your credentials against national databases.</p>
+        <p><strong>3.2 Payments:</strong> Tutor earnings for language sessions are processed monthly, minus a service commission as specified in your dashboard.</p>
+
+        <h3><span class="clause-num">4.0</span>Code of Conduct</h3>
+        <p>You shall not engage in any form of harassment, discrimination, or sharing of personal contact information (off-platform communication) with students unless explicitly authorized. Maintaining student privacy is a core requirement of your tenure.</p>
+
+        <h3><span class="clause-num">5.0</span>Third-Party Job Listings</h3>
+        <p>While the Platform shares "legit" work-from-home opportunities, you acknowledge that these are external companies. You are responsible for following their specific terms and conditions. The Platform is not liable for disputes occurring on third-party websites.</p>
+
+        <h3><span class="clause-num">6.0</span>Limitation of Liability</h3>
+        <p>The Platform is provided "as is." We are not liable for any indirect, incidental, or consequential damages resulting from your use of the portal or your interactions with students encountered herein.</p>
+
+        <h3><span class="clause-num">7.0</span>Termination</h3>
+        <p>We reserve the right to suspend or delete your account if you violate any part of this agreement, receive multiple student complaints, or fail the background verification process.</p>
         
-        <h3>2. Academic Integrity</h3>
-        <p>Tutors must never complete assignments, take exams, or perform work on behalf of a student. Your role is to guide, explain, and assist the student in understanding the material. Facilitating cheating or plagiarism is strictly prohibited.</p>
-        <br><br><br><br><br>
-        
-        <h3>3. Scheduling and Punctuality</h3>
-        <p>You agree to honor all scheduled sessions. If a cancellation is necessary, you must provide the student with at least 24 hours' notice. Frequent cancellations or no-shows will negatively impact your ranking and may lead to suspension.</p>
-        <br><br><br><br><br>
-        
-        <h3>4. Background Verification Fee</h3>
-        <p>To maintain a safe environment, all tutors must undergo a background and identity check. This process requires a one-time, non-refundable verification fee of KES 100, payable via M-Pesa at the end of this registration process.</p>
-        <br><br><br><br><br>
-        
-        <h3>5. Final Acknowledgment</h3>
-        <p>By proceeding, you acknowledge that you have read and agreed to all the stipulations outlined in this legal agreement. You understand your responsibilities and agree to the payment of the verification fee.</p>
+        <p style="text-align: center; margin-top: 50px; color: #9aa0a6;">--- End of Agreement ---</p>
     </div>
 
-    <div>
-        <label style="font-size: 16px;">
+    <div class="action-area">
+        <label>
             <input type="checkbox" id="agree-check" disabled> 
-            I have scrolled to the bottom, read, and agree to the terms.
+            <span>I confirm that I have read the Agreement in full, I understand my responsibilities as a Language Tutor, and I agree to the KES 100 verification fee.</span>
         </label>
-        <br><br>
-        <button id="next-btn" onclick="goToQuiz()" disabled>Proceed to Competency Test</button>
+        <button id="next-btn" onclick="goToQuiz()" disabled>Agree & Proceed to Test</button>
     </div>
 </div>
 
 <script>
-    // Security check: Make sure they registered first
+    // Security check
     if (!localStorage.getItem('tutorEmail')) {
         window.location.href = "index.html";
     }
@@ -60,9 +143,10 @@
     const agreeCheck = document.getElementById('agree-check');
     const nextBtn = document.getElementById('next-btn');
 
-    // Scroll Logic
+    // Pro Scroll Detection: Ensures they actually reach the bottom
     termsBox.addEventListener('scroll', function() {
-        if (termsBox.scrollHeight - termsBox.scrollTop <= termsBox.clientHeight + 2) {
+        const scrollBottom = termsBox.scrollHeight - termsBox.scrollTop - termsBox.clientHeight;
+        if (scrollBottom < 20) { // Within 20px of the bottom
             agreeCheck.disabled = false;
         }
     });
@@ -72,6 +156,7 @@
     });
 
     function goToQuiz() {
+        // Optional: Save agreement time to your DB here if needed
         window.location.href = "quiz.html";
     }
 </script>
