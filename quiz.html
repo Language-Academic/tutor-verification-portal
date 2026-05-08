@@ -157,9 +157,10 @@
         }
 
         if (score === 5) {
-            alert(`Excellent! 5/5 in ${currentLanguage.toUpperCase()}. Proceeding to Payment.`);
+            alert(`Excellent! 5/5 in ${currentLanguage.toUpperCase()}. Proceeding to Marketplace.`);
             localStorage.setItem('tutorLanguage', currentLanguage);
-            window.location.href = "payment.html";
+            // Redirecting to marketplace instead of payment
+            window.location.href = "marketplace.html";
         } else {
             alert(`Score: ${score}/5. You must get a perfect score to qualify as a ${currentLanguage} translator. Try again!`);
         }
