@@ -3,379 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Opportunities | Find Tutors & Jobs</title>
+    <title>Marketplace | Global Connect Tutors & Jobs</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --bg-light: #f8fafc;
-            --text-dark: #0f172a;
-            --text-muted: #64748b;
-            --card-bg: #ffffff;
+            --brand-blue: #0a66c2;
+            --brand-green: #057642;
+            --surface-gray: #f3f2ef;
+            --text-main: #191919;
+            --text-alt: #666666;
+            --white: #ffffff;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.6;
+            background-color: var(--surface-gray);
+            color: var(--text-main);
+            overflow-x: hidden;
         }
 
-        /* --- Header --- */
-        header {
-            background: var(--card-bg);
-            padding: 20px 5%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            text-align: center;
+        /* --- Professional Navbar --- */
+        nav {
+            background: var(--white);
+            padding: 12px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            border-bottom: 1px solid #e0e0e0;
         }
 
-        header h1 {
-            color: var(--primary);
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+        .logo { font-size: 22px; font-weight: 800; color: var(--brand-blue); }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(135deg, #004182 0%, #0073b1 100%);
+            color: white;
+            padding: 60px 10%;
+            text-align: center;
         }
 
-        header p {
-            color: var(--text-muted);
-            font-size: 15px;
-        }
+        .hero h1 { font-size: 36px; margin-bottom: 10px; }
+        .hero p { font-size: 18px; opacity: 0.9; }
 
-        /* --- Main Layout --- */
+        /* --- Main Content --- */
         .container {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 0 5%;
+            max-width: 1200px;
+            margin: -40px auto 60px;
+            padding: 0 20px;
         }
 
-        .section-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 20px;
+        .section-header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
+            margin-bottom: 20px;
+            margin-top: 40px;
         }
 
-        /* --- Grid System --- */
+        .section-header h2 { font-size: 20px; color: var(--text-main); }
+
+        /* --- Grid & Cards --- */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 60px;
+            gap: 20px;
         }
 
-        /* --- Cards --- */
         .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02), 0 10px 15px rgba(0,0,0,0.03);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            border: 1px solid #f1f5f9;
+            background: var(--white);
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
         }
+
+        .verified-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #e7f3ff;
+            color: #0073b1;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .profile-header { display: flex; flex-direction: column; align-items: center; margin-bottom: 15px; }
 
         .profile-img {
-            width: 90px;
-            height: 90px;
+            width: 85px;
+            height: 85px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #e2e8f0;
-            margin-bottom: 15px;
+            border: 2px solid var(--brand-blue);
+            margin-bottom: 10px;
         }
 
-        .job-icon {
-            width: 60px;
-            height: 60px;
-            background: #eff6ff;
-            color: var(--primary);
-            border-radius: 12px;
+        .card h3 { font-size: 18px; margin-bottom: 2px; }
+        .card .specialty { color: var(--brand-blue); font-weight: 600; font-size: 14px; margin-bottom: 10px; }
+
+        .stats {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        .card h3 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-
-        .card .badge {
-            background: #dbeafe;
-            color: #1e40af;
-            padding: 4px 12px;
-            border-radius: 20px;
+            gap: 15px;
             font-size: 13px;
-            font-weight: 600;
+            color: var(--text-alt);
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+
+        .price-tag {
+            font-size: 22px;
+            font-weight: 800;
+            color: #333;
             margin-bottom: 15px;
         }
-
-        .card .price {
-            font-size: 20px;
-            font-weight: 800;
-            color: #0f172a;
-            margin-bottom: 20px;
-        }
-
-        .card .price span {
-            font-size: 14px;
-            font-weight: normal;
-            color: var(--text-muted);
-        }
+        
+        .price-tag span { font-size: 14px; color: var(--text-alt); font-weight: 400; }
 
         .action-btn {
             width: 100%;
             padding: 12px;
-            background: var(--primary);
+            background: var(--brand-blue);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 15px;
+            border-radius: 25px;
             font-weight: 600;
+            font-size: 15px;
             cursor: pointer;
             transition: background 0.2s;
         }
 
-        .action-btn:hover { background: var(--primary-hover); }
+        .action-btn:hover { background: #004182; }
 
-        /* --- Modal (Popup) --- */
+        /* --- Jobs Section Styling --- */
+        .job-card { text-align: left; align-items: flex-start; }
+        .company-logo { font-size: 32px; margin-bottom: 10px; }
+        .job-meta { font-size: 12px; color: var(--brand-green); font-weight: 700; margin-bottom: 8px; }
+
+        /* --- Modal (4K Blur Effect) --- */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(5px);
-            display: flex;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
+            z-index: 2000;
         }
 
         .modal-content {
-            background: white;
+            background: var(--white);
             padding: 40px;
-            border-radius: 16px;
+            border-radius: 12px;
             width: 90%;
-            max-width: 450px;
+            max-width: 420px;
             text-align: center;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: slideUp 0.4s ease;
         }
 
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        .modal-icon {
-            font-size: 40px;
-            background: #fef3c7;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-        }
+        .modal-icon { font-size: 50px; margin-bottom: 20px; }
+        .modal-h { font-size: 22px; margin-bottom: 10px; font-weight: 700; }
+        .modal-p { color: var(--text-alt); margin-bottom: 30px; font-size: 15px; }
 
-        .modal-content h2 { margin-bottom: 10px; color: #0f172a; }
-        .modal-content p { color: var(--text-muted); margin-bottom: 25px; }
-
-        .modal-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .pay-btn {
-            background: #10b981;
+        .proceed-btn {
+            background: var(--brand-green);
             color: white;
-            padding: 14px;
+            padding: 16px;
+            width: 100%;
             border: none;
-            border-radius: 8px;
+            border-radius: 5px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
-            transition: 0.2s;
+            margin-bottom: 10px;
         }
 
-        .pay-btn:hover { background: #059669; }
-
-        .close-btn {
-            background: transparent;
-            color: var(--text-muted);
-            padding: 10px;
-            border: none;
-            font-size: 14px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        
-        .close-btn:hover { color: #0f172a; text-decoration: underline; }
+        .cancel-btn { background: none; border: none; color: var(--text-alt); cursor: pointer; text-decoration: underline; }
 
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Global Connect Portal</h1>
-        <p>Learn a new language or find premium online freelance jobs.</p>
-    </header>
+    <nav>
+        <div class="logo">PORTAL<span>PRO</span></div>
+    </nav>
+
+    <section class="hero">
+        <h1>Welcome to the Global Marketplace</h1>
+        <p>Book expert tutors or apply for verified remote job opportunities.</p>
+    </section>
 
     <div class="container">
-        <!-- Language Tutors Section -->
-        <h2 class="section-title">🗣️ Top Rated Language Tutors</h2>
+        
+        <!-- TUTORS SECTION -->
+        <div class="section-header">
+            <h2>Featured Language Experts</h2>
+        </div>
         <div class="grid">
             <!-- Tutor 1 -->
             <div class="card">
-                <img src="https://i.pravatar.cc/150?img=47" alt="Tutor" class="profile-img">
-                <h3>Aisha M.</h3>
-                <div class="badge">Swahili (Native)</div>
-                <div class="price">$10 <span>/ hour</span></div>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;">Learn fluent conversational Swahili for business or travel.</p>
-                <button class="action-btn unlock-trigger">Book Session</button>
+                <span class="verified-badge">✓ Verified</span>
+                <div class="profile-header">
+                    <img src="https://i.pravatar.cc/150?img=48" class="profile-img">
+                    <h3>Mercy W.</h3>
+                    <div class="specialty">Native Kiswahili Expert</div>
+                </div>
+                <div class="stats"><span>⭐ 4.9 (120 reviews)</span> <span>🎓 450 Students</span></div>
+                <div class="price-tag">$8 <span>/hr</span></div>
+                <button class="action-btn unlock-trigger">Book Trial Lesson</button>
             </div>
-            
+
             <!-- Tutor 2 -->
             <div class="card">
-                <img src="https://i.pravatar.cc/150?img=33" alt="Tutor" class="profile-img">
-                <h3>Kenji Sato</h3>
-                <div class="badge">Japanese (JLPT N1)</div>
-                <div class="price">$15 <span>/ hour</span></div>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;">Master Hiragana, Katakana, and basic Kanji writing.</p>
-                <button class="action-btn unlock-trigger">Book Session</button>
+                <span class="verified-badge">✓ Verified</span>
+                <div class="profile-header">
+                    <img src="https://i.pravatar.cc/150?img=11" class="profile-img">
+                    <h3>Julien M.</h3>
+                    <div class="specialty">French B2 Specialist</div>
+                </div>
+                <div class="stats"><span>⭐ 5.0 (89 reviews)</span> <span>🎓 210 Students</span></div>
+                <div class="price-tag">$15 <span>/hr</span></div>
+                <button class="action-btn unlock-trigger">Book Trial Lesson</button>
             </div>
 
             <!-- Tutor 3 -->
             <div class="card">
-                <img src="https://i.pravatar.cc/150?img=12" alt="Tutor" class="profile-img">
-                <h3>Pierre Dubois</h3>
-                <div class="badge">French (Native)</div>
-                <div class="price">$12 <span>/ hour</span></div>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;">Interactive lessons focusing on Parisian pronunciation.</p>
-                <button class="action-btn unlock-trigger">Book Session</button>
-            </div>
-
-            <!-- Tutor 4 -->
-            <div class="card">
-                <img src="https://i.pravatar.cc/150?img=26" alt="Tutor" class="profile-img">
-                <h3>Li Wei</h3>
-                <div class="badge">Mandarin Chinese</div>
-                <div class="price">$8 <span>/ hour</span></div>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;">Beginner-friendly Mandarin with a focus on tones.</p>
-                <button class="action-btn unlock-trigger">Book Session</button>
+                <span class="verified-badge">✓ Verified</span>
+                <div class="profile-header">
+                    <img src="https://i.pravatar.cc/150?img=20" class="profile-img">
+                    <h3>Zhang L.</h3>
+                    <div class="specialty">Mandarin Chinese (HSK 6)</div>
+                </div>
+                <div class="stats"><span>⭐ 4.8 (215 reviews)</span> <span>🎓 600 Students</span></div>
+                <div class="price-tag">$12 <span>/hr</span></div>
+                <button class="action-btn unlock-trigger">Book Trial Lesson</button>
             </div>
         </div>
 
-        <!-- Online Jobs Section -->
-        <h2 class="section-title">💻 Premium Remote Job Platforms</h2>
+        <!-- JOBS SECTION -->
+        <div class="section-header">
+            <h2>Remote Job Opportunities</h2>
+        </div>
         <div class="grid">
             <!-- Job 1 -->
-            <div class="card">
-                <div class="job-icon">📝</div>
-                <h3>Transcription Hub</h3>
-                <div class="badge">Audio to Text</div>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;">Earn up to $20/hour transcribing short audio clips. Flexible schedule.</p>
-                <button class="action-btn unlock-trigger">Apply Now</button>
+            <div class="card job-card">
+                <div class="company-logo">📄</div>
+                <div class="job-meta">URGENT HIRING</div>
+                <h3>Audio Transcriptionist</h3>
+                <p style="font-size: 14px; color: var(--text-alt); margin-bottom: 15px;">Convert Kenyan local dialect audio to English text. Flexible hours.</p>
+                <div class="price-tag">$150 <span>/ Weekly Avg.</span></div>
+                <button class="action-btn unlock-trigger">View Application</button>
             </div>
 
             <!-- Job 2 -->
-            <div class="card">
-                <div class="job-icon">🎧</div>
-                <h3>Global Support Team</h3>
-                <div class="badge">Customer Service</div>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;">Remote chat support agents needed. No experience required.</p>
-                <button class="action-btn unlock-trigger">Apply Now</button>
-            </div>
-
-            <!-- Job 3 -->
-            <div class="card">
-                <div class="job-icon">📊</div>
-                <h3>Data Entry Pro</h3>
-                <div class="badge">Data Management</div>
-                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 15px;">Input data into spreadsheets from home. Weekly payouts.</p>
-                <button class="action-btn unlock-trigger">Apply Now</button>
+            <div class="card job-card">
+                <div class="company-logo">🎧</div>
+                <div class="job-meta">REMOTE</div>
+                <h3>Virtual Customer Support</h3>
+                <p style="font-size: 14px; color: var(--text-alt); margin-bottom: 15px;">Support international clients via email and live chat platforms.</p>
+                <div class="price-tag">$400 <span>/ Month</span></div>
+                <button class="action-btn unlock-trigger">View Application</button>
             </div>
         </div>
+
     </div>
 
-    <!-- The Lock Modal (Hidden by default) -->
+    <!-- LOCK MODAL -->
     <div class="modal-overlay" id="lockModal">
         <div class="modal-content">
-            <div class="modal-icon">🔒</div>
-            <h2>Premium Access Required</h2>
-            <p>To connect with this tutor or apply for this job, you must be a verified member of our platform.</p>
+            <div class="modal-icon">🔐</div>
+            <div class="modal-h">Verification Required</div>
+            <p class="modal-p">To maintain the security of our tutors and partners, you must complete your identity verification and pay the registration fee of <strong>KES 100</strong>.</p>
             
-            <div class="modal-actions">
-                <!-- Change the onclick destination to your payment/registration page -->
-                <button class="pay-btn" onclick="window.location.href='index.html'">Complete Verification (KES 100)</button>
-                <button class="close-btn" id="closeModal">Maybe Later</button>
-            </div>
+            <!-- This navigates to your next step -->
+            <button class="proceed-btn" onclick="window.location.href='index.html'">Verify & Pay Now</button>
+            <button class="cancel-btn" id="closeModal">Back to Marketplace</button>
         </div>
     </div>
 
-    <!-- Interactive Logic -->
     <script>
-        // Get modal elements
         const modal = document.getElementById('lockModal');
-        const closeBtn = document.getElementById('closeModal');
-        const triggerButtons = document.querySelectorAll('.unlock-trigger');
+        const triggers = document.querySelectorAll('.unlock-trigger');
+        const close = document.getElementById('closeModal');
 
-        // Open modal when ANY "Book" or "Apply" button is clicked
-        triggerButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                modal.classList.add('active');
-                // Optional: Prevent background scrolling
-                document.body.style.overflow = 'hidden'; 
+        triggers.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
             });
         });
 
-        // Close modal function
-        function closeModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto'; // Restore scrolling
-        }
-
-        // Close on 'Maybe Later' click
-        closeBtn.addEventListener('click', closeModal);
-
-        // Close if user clicks outside the white box (on the blurry background)
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
+        close.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
         });
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
     </script>
 </body>
 </html>
